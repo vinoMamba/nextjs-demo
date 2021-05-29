@@ -1,9 +1,12 @@
 import {NextApiHandler} from "next";
+import {getPosts} from "lib/posts";
 
-const Posts: NextApiHandler = (request, response) => {
+const Posts: NextApiHandler = async (request, response) => {
+    const posts = await getPosts().then()
+
     response.statusCode = 200
     response.setHeader('Content-Type', 'application/json')
-    response.write(JSON.stringify({name: "vino", age: 24}))
+    response.write(JSON.stringify(posts))
     response.end()
 }
 export default Posts
