@@ -14,7 +14,7 @@ const PostsIndex: NextPage<Props> = (props) => {
 };
 export default PostsIndex;
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
     const posts = await getPosts();
     return {
         props: {
