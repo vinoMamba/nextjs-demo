@@ -30,3 +30,18 @@ export const getPost = async (id: string) => {
         title, date, content, htmlContent
     }));
 };
+
+
+// paths: [
+//     {
+//         params: {id: "第一篇博客"}
+//     },
+//     {
+//         params: {id: "第二篇博客"}
+//     }
+// ],
+
+export const getPostId = async () => {
+    const fileNames = await fsPromise.readdir(markdownDir);
+    return fileNames.map(filename => filename.replace(/\.md$/g, ""));
+};
