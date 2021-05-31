@@ -10,12 +10,12 @@ const Home: NextPage<Props> = (props) => {
             <div>
                 <h1>Vino Blog Site</h1>
                 <p>
-                    <Link href="/posts/first-post">
-                        <a>第一篇博客</a>
+                    <Link href="/posts">
+                        <a>博客列表</a>
                     </Link>
                 </p>
             </div>
-            <h2>你的浏览器是{`${name}-${version}-${major}`}{}</h2>
+            <footer>你的浏览器是{`${name}-${version}-${major}`}{}</footer>
         </>
     );
 };
