@@ -2,11 +2,12 @@
 /// <reference types="next/types/global" />
 declare module "*.png" {
     const value: any;
-    export default value
+    export default value;
 }
 type Post = {
     id: string,
     date: string,
     title: string,
-    content: string
+    content: string,
+    htmlContent: string
 }
