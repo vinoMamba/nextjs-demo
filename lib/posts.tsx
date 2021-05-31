@@ -20,7 +20,6 @@ export const getPosts = async () => {
 };
 
 
-//TODO: 有报错
 export const getPost = async (id: string) => {
     const fullPath = path.join(markdownDir, id + ".md");
     const text = fs.readFileSync(fullPath, "utf-8");
