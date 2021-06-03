@@ -56,6 +56,7 @@ yarn m:revert
 yarn e:create -n <entityName>
 ```
 
+`yarn dev `启动服务之后,执行`node dist\seed.js` 生成数据
 
 
 
