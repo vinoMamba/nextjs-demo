@@ -42,8 +42,18 @@ CREATE DATABASE blog_test ENCODING 'UTF8' LC_COLLATE 'en_US.utf8' LC_CTYPE 'en_U
 ## 创建表
 
 ```bash
-yarn
+# 创建migration
+yarn m:create -n CreatePosts
+# 运行migration 创建表
+yarn m:run 
+# 回退
+yarn m:revert
+```
 
+## 创建实体
+
+```bash
+yarn e:create -n <entityName>
 ```
 
 
