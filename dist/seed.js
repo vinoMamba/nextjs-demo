@@ -47,10 +47,11 @@ var _Review = require("./entity/Review");
             return manager.save(r1);
 
           case 18:
-            _context.next = 20;
+            console.log('ok');
+            _context.next = 21;
             return connection.close();
 
-          case 20:
+          case 21:
           case "end":
             return _context.stop();
         }
