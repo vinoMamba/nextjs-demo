@@ -20,7 +20,7 @@ createConnection().then(async connection => {
     r1.post = p1;
     r1.user = u1;
     await manager.save(r1);
-    console.log('ok');
+    console.log("ok");
     await connection.close();
 
 }).catch(error => console.log(error));

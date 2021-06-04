@@ -1,5 +1,7 @@
-import {getPost, getPostId} from "../../lib/posts";
-import {GetStaticPaths, GetStaticProps, NextPage} from "next";
+import {GetServerSideProps, NextPage} from "next";
+import Link from "next/link";
+import {getDatabaseConnection} from "lib/getDatabaseConnection";
+import {Post} from "src/entity/Post";
 
 type Props = { post: Post }
 const PostsShow: NextPage<Props> = (props) => {
@@ -7,29 +9,21 @@ const PostsShow: NextPage<Props> = (props) => {
     return (
         <>
             <h1>{post.title}</h1>
-            <article>{post.content}</article>
             <hr/>
-            <article dangerouslySetInnerHTML={{__html: post.htmlContent}}/>
+            <article dangerouslySetInnerHTML={{__html: post.content}}/>
+            <hr/>
+            <Link href="/"><a>返回首页</a></Link>
         </>
     );
 };
 export default PostsShow;
 
-export const getStaticPaths = async () => {
-    const ids = await getPostId();
-    const paths = ids.map(id => ({params: {id: id}}));
-    return {
-        paths: paths,
-        fallback: false
-    };
-};
-
-export const getStaticProps = async (x: any) => {
-    const id = x.params.id;
-    const post = await getPost(id);
+export const getServerSideProps: GetServerSideProps<any, { id: string }> = async (context) => {
+    const connection = await getDatabaseConnection();
+    const post = await connection.manager.findOne(Post, (context.params!).id);
     return {
         props: {
-            post: post
+            post: JSON.parse(JSON.stringify(post))
         }
     };
 };
