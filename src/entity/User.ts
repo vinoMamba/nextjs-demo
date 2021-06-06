@@ -9,7 +9,7 @@ export class User {
     @Column("varchar")
     username!: string;
     @Column("varchar")
-    password!: string;
+    passwordDigest!: string;
     @CreateDateColumn()
     createdAt!: Date;
     @UpdateDateColumn()

@@ -2,7 +2,6 @@ import {NextApiHandler} from "next";
 import {getDatabaseConnection} from "lib/getDatabaseConnection";
 import {User} from "src/entity/User";
 import md5 from "md5";
-import {use} from "marked";
 
 const Posts: NextApiHandler = async (request, response) => {
     const {username, password, passwordConfirmation} = request.body;
@@ -39,7 +38,7 @@ const Posts: NextApiHandler = async (request, response) => {
         const connection = await getDatabaseConnection();
         const user = new User();
         user.username = username;
-        user.password = md5(password);
+        user.passwordDigest = md5(password);
         await connection.manager.save(user);
         response.statusCode = 200;
         response.write(JSON.stringify(user));

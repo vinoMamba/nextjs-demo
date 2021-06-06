@@ -43,8 +43,8 @@ var CreateUsers1622730574912 = /*#__PURE__*/function () {
                     name: "username",
                     type: "varchar"
                   }, {
-                    name: "password",
-                    type: "text"
+                    name: "passwordDigest",
+                    type: "varchar"
                   }, {
                     name: "createdAt",
                     type: "timestamp",

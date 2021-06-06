@@ -37,7 +37,7 @@ var User = (_dec = (0, _typeorm.Entity)("users"), _dec2 = (0, _typeorm.PrimaryGe
   (0, _classCallCheck2["default"])(this, User);
   (0, _initializerDefineProperty2["default"])(this, "id", _descriptor, this);
   (0, _initializerDefineProperty2["default"])(this, "username", _descriptor2, this);
-  (0, _initializerDefineProperty2["default"])(this, "password", _descriptor3, this);
+  (0, _initializerDefineProperty2["default"])(this, "passwordDigest", _descriptor3, this);
   (0, _initializerDefineProperty2["default"])(this, "createdAt", _descriptor4, this);
   (0, _initializerDefineProperty2["default"])(this, "updatedAt", _descriptor5, this);
   (0, _initializerDefineProperty2["default"])(this, "posts", _descriptor6, this);
@@ -52,7 +52,7 @@ var User = (_dec = (0, _typeorm.Entity)("users"), _dec2 = (0, _typeorm.PrimaryGe
   enumerable: true,
   writable: true,
   initializer: null
-}), _descriptor3 = (0, _applyDecoratedDescriptor2["default"])(_class2.prototype, "password", [_dec4], {
+}), _descriptor3 = (0, _applyDecoratedDescriptor2["default"])(_class2.prototype, "passwordDigest", [_dec4], {
   configurable: true,
   enumerable: true,
   writable: true,
