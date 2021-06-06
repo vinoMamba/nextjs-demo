@@ -5,6 +5,7 @@ import md5 from "md5";
 
 const Posts: NextApiHandler = async (request, response) => {
     const {username, password, passwordConfirmation} = request.body;
+    const connection = await getDatabaseConnection();
     type Errors = {
         username: string[];
         password: string[];
@@ -23,6 +24,10 @@ const Posts: NextApiHandler = async (request, response) => {
     if (username.trim().length <= 3) {
         errors.username.push("用户名太短");
     }
+    const found = await connection.manager.find(User, {username});
+    if (found) {
+        errors.username.push("用户名已存在");
+    }
     if (password === "") {
         errors.password.push("密码不能为空");
     }
@@ -35,7 +40,6 @@ const Posts: NextApiHandler = async (request, response) => {
         response.statusCode = 422;
         response.write(JSON.stringify(errors));
     } else {
-        const connection = await getDatabaseConnection();
         const user = new User();
         user.username = username;
         user.passwordDigest = md5(password);
