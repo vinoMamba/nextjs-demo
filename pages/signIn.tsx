@@ -2,26 +2,23 @@ import {NextPage} from "next";
 import {useCallback, useState} from "react";
 import axios, {AxiosResponse} from "axios";
 
-const SignUp: NextPage = () => {
+const SignIn: NextPage = () => {
     const [formData, setFormData] = useState({
         username: "",
         password: "",
-        passwordConfirmation: ""
     });
     const [errors, setErrors] = useState({
         username: [],
         password: [],
-        passwordConfirmation: []
     });
     //TODO:useCallback
     const onSubmit = useCallback((e) => {
         e.preventDefault();
         axios.post(
-            `/api/v1/users`,
+            `/api/v1/sessions`,
             formData
         ).then((response) => {
-            window.alert("登录成功");
-            window.location.href = "/signIn";
+            console.log(response);
         }, error => {
             const response: AxiosResponse = error.response;
             if (response && response.status === 422) {
@@ -32,7 +29,7 @@ const SignUp: NextPage = () => {
     return (
         <>
             {JSON.stringify(errors)}
-            <h1>注册</h1>
+            <h1>登录</h1>
             <form onSubmit={onSubmit}>
                 <div>
                     <label>
@@ -59,23 +56,10 @@ const SignUp: NextPage = () => {
                     {errors.password?.length > 0 ? <span>{errors.password.join(",")}</span> : null}
                 </div>
                 <div>
-                    <label>
-                        确认密码
-                        <input type="password" value={formData.passwordConfirmation}
-                               onChange={e => setFormData({
-                                   ...formData,
-                                   passwordConfirmation: e.target.value
-                               })}
-                        />
-                    </label>
-                    {errors.passwordConfirmation?.length > 0 ?
-                        <span>{errors.passwordConfirmation.join(",")}</span> : null}
-                </div>
-                <div>
-                    <button type="submit">注册</button>
+                    <button type="submit">登录</button>
                 </div>
             </form>
         </>
     );
 };
-export default SignUp;
+export default SignIn;
