@@ -1,6 +1,6 @@
 import {NextPage} from "next";
 import {useCallback, useState} from "react";
-import axios, {AxiosError, AxiosResponse} from "axios";
+import axios, {AxiosResponse} from "axios";
 
 const SignUp: NextPage = () => {
     const [formData, setFormData] = useState({
@@ -8,6 +8,12 @@ const SignUp: NextPage = () => {
         password: "",
         passwordConfirmation: ""
     });
+    const [errors, setErrors] = useState({
+        username: [],
+        password: [],
+        passwordConfirmation: []
+    });
+    //TODO:useCallback
     const onSubmit = useCallback((e) => {
         e.preventDefault();
         axios.post(
@@ -15,15 +21,19 @@ const SignUp: NextPage = () => {
             formData
         ).then((response) => {
             console.log(response);
-        }, (error) => {
+        }, error => {
             const response: AxiosResponse = error.response;
-            if (response.status === 422) {
-                alert(JSON.stringify(response.data));
+            if (response && response.status === 422) {
+                setErrors({
+                    ...errors,
+                    ...response.data
+                });
             }
         });
     }, [formData]);
     return (
         <>
+            {JSON.stringify(errors)}
             <h1>注册</h1>
             <form onSubmit={onSubmit}>
                 <div>
@@ -35,6 +45,7 @@ const SignUp: NextPage = () => {
                                    username: e.target.value
                                })}/>
                     </label>
+                    {errors.username && errors.username.length > 0 ? <span>{errors.username.join(",")}</span> : null}
                 </div>
                 <div>
                     <label>
@@ -46,6 +57,7 @@ const SignUp: NextPage = () => {
                                })}
                         />
                     </label>
+                    {errors.password && errors.password.length > 0 ? <span>{errors.password.join(",")}</span> : null}
                 </div>
                 <div>
                     <label>
@@ -57,6 +69,8 @@ const SignUp: NextPage = () => {
                                })}
                         />
                     </label>
+                    {errors.passwordConfirmation && errors.passwordConfirmation.length > 0 ?
+                        <span>{errors.passwordConfirmation.join(",")}</span> : null}
                 </div>
                 <div>
                     <button type="submit">注册</button>

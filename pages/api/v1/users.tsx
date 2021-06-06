@@ -1,6 +1,6 @@
 import {NextApiHandler} from "next";
-import {getDatabaseConnection} from "../../../lib/getDatabaseConnection";
-import {User} from "../../../src/entity/User";
+import {getDatabaseConnection} from "lib/getDatabaseConnection";
+import {User} from "src/entity/User";
 
 const Posts: NextApiHandler = async (request, response) => {
     const {username, password, passwordConfirmation} = request.body;
