@@ -1,7 +1,16 @@
-import {Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
+import {
+    BeforeInsert,
+    Column,
+    CreateDateColumn,
+    Entity,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn
+} from "typeorm";
 import {Post} from "./Post";
 import {Review} from "./Review";
 import {getDatabaseConnection} from "../../lib/getDatabaseConnection";
+import md5 from "md5";
 
 @Entity("users")
 export class User {
@@ -21,8 +30,8 @@ export class User {
     @OneToMany(() => Review, review => review.user)
     reviews?: Review[];
 
-    password?: string;
-    passwordConfirmation?: string;
+    password!: string;
+    passwordConfirmation!: string;
     errors: UsersErrors = {username: [], password: [], passwordConfirmation: []};
 
     async validate() {
@@ -52,5 +61,10 @@ export class User {
 
     hasErrors() {
         return !!Object.values(this.errors).find(e => e.length > 0);
+    }
+
+    @BeforeInsert()
+    generatePasswordDigest() {
+        this.passwordDigest = md5(this.password!);
     }
 }
