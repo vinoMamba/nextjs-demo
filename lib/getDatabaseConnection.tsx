@@ -12,9 +12,13 @@ const create = async () => {
     });
 };
 
-export const getDatabaseConnection = async () => {
+const promise = (async () => {
     const connectionManager = getConnectionManager();
     const defaultManager = connectionManager.has("default") && connectionManager.get("default");
     if (defaultManager) await defaultManager.close();
     return create();
+})();
+
+export const getDatabaseConnection = async () => {
+    return promise;
 };
