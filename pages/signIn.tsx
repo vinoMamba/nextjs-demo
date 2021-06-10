@@ -11,14 +11,13 @@ const SignIn: NextPage = () => {
         username: [],
         password: [],
     });
-    //TODO:useCallback
     const onSubmit = useCallback((e) => {
         e.preventDefault();
         axios.post(
             `/api/v1/sessions`,
             formData
         ).then((response) => {
-            console.log(response);
+            window.alert("登录成功");
         }, error => {
             const response: AxiosResponse = error.response;
             if (response && response.status === 422) {

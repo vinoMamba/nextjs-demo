@@ -16,3 +16,8 @@ type UsersErrors = {
     password: string[];
     passwordConfirmation: string[];
 }
+
+type SignInErrors = {
+    username: string[];
+    password: string[];
+}
