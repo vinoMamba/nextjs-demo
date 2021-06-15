@@ -5,7 +5,6 @@ import {withSession} from "../lib/withSession";
 import {User} from "../src/entity/User";
 
 const SignIn: NextPage<{ user: User }> = (props) => {
-    console.log(props.user);
     const [formData, setFormData] = useState({
         username: "",
         password: "",
