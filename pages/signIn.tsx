@@ -58,7 +58,7 @@ const SignIn: NextPage<{ user: User }> = (props) => {
                 onSubmit={onSubmit}
                 buttons={
                     <>
-                        <button type="submit">登录</button>
+                        <button type="submit">提交</button>
                     </>
                 }
             />
