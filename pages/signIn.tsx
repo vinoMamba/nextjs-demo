@@ -1,11 +1,11 @@
 import {GetServerSideProps, GetServerSidePropsContext, NextPage} from "next";
-import axios, {AxiosResponse} from "axios";
+import axios from "axios";
 import {withSession} from "../lib/withSession";
 import {User} from "../src/entity/User";
 import {useForm} from "../hooks/useForm";
 
 const SignIn: NextPage<{ user: User }> = (props) => {
-        const {form, setErrors} = useForm({
+        const {form} = useForm({
             initFormData: {username: "", password: "",},
             fields: [
                 {label: "用户名", type: "text", key: "username"},
