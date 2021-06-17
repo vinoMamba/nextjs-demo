@@ -1,6 +1,4 @@
 import {NextPage} from "next";
-import {Form} from "../../components/Form";
-import {useCallback, useState} from "react";
 import axios, {AxiosResponse} from "axios";
 import {useForm} from "../../hooks/useForm";
 
