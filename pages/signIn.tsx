@@ -6,10 +6,7 @@ import {useForm} from "../hooks/useForm";
 
 const SignIn: NextPage<{ user: User }> = (props) => {
         const onSubmit = (formData: typeof initFormData) => {
-            axios.post(
-                `/api/v1/sessions`,
-                formData
-            ).then((response) => {
+            axios.post(`/api/v1/sessions`, formData).then((response) => {
                 window.alert("登录成功");
             }, error => {
                 const response: AxiosResponse = error.response;
