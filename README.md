@@ -58,12 +58,11 @@ yarn e:create -n <entityName>
 
 `yarn dev `启动服务之后,执行`node dist\seed.js` 生成数据
 
+## 知识点
 
+1. 受控组件与非受控组件
 
-
-
-
-
+2. hooks封装
 
 
 
