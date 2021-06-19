@@ -12,7 +12,7 @@ type UseFromOptions<T> = {
     buttons: ReactChild;
     submit: {
         request: (formData: T) => Promise<T>;
-        message: string;
+        success: () => void;
     }
 }
 
@@ -35,13 +35,15 @@ export function useForm<T extends Object>(options: UseFromOptions<T>) {
     const _onSubmit = useCallback((e) => {
         e.preventDefault();
         submit.request(formData).then(
-            () => {
-                window.alert(submit.message);
-            },
+            submit.success,
             error => {
                 const response: AxiosResponse = error.response;
                 if (response && response.status === 422) {
                     setErrors(response.data);
+                } else if (response && response.status === 401) {
+                    console.log(encodeURIComponent(window.location.pathname));
+                    window.alert("请先登录");
+                    window.location.href = `/signIn?returnTo=${encodeURIComponent(window.location.pathname)}`;
                 }
             }
         );

@@ -10,10 +10,16 @@ const Posts: NextApiHandler = withSession(async (request, response) => {
         post.title = title;
         post.content = content;
         const user = request.session.get("currentUser");
-        post.author = user.id;
-        const connection = await getDatabaseConnection();
-        await connection.manager.save(post);
-        response.json(post);
+        if (!user) {
+            response.statusCode = 401;
+            response.end();
+        } else {
+            response.statusCode = 200;
+            post.author = user.id;
+            const connection = await getDatabaseConnection();
+            await connection.manager.save(post);
+            response.json(post);
+        }
     }
 });
 export default Posts;
