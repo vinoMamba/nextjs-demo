@@ -2,14 +2,21 @@ import Link from "next/link";
 import {GetServerSideProps, NextPage} from "next";
 import {getDatabaseConnection} from "lib/getDatabaseConnection";
 import {Post} from "src/entity/Post";
+import qs from "query-string";
 
-type Props = { browser: { name: string; version: string; major: string }, posts: Post[] }
+type Props = {
+    posts: Post[],
+    count: number,
+    perPage: number,
+    page: number
+}
 const PostsIndex: NextPage<Props> = (props) => {
-    const {posts} = props;
+    const {posts, count, perPage, page} = props;
     return (
         <>
             <div>
                 <h1>Vino Blog Site</h1>
+                <hr/>
                 <h4>文章列表</h4>
                 <ol>
                     {posts.map(post =>
@@ -20,6 +27,11 @@ const PostsIndex: NextPage<Props> = (props) => {
                         </li>
                     )}
                 </ol>
+                <p>
+                    <Link href={`?page=${page - 1}`}><a>上一页</a></Link>
+                    | 每页显示:{perPage}|文章总数:{count} | 当前是第{page}页 |
+                    <Link href={`?page=${page + 1}`}><a>下一页</a></Link>
+                </p>
             </div>
         </>
     );
@@ -28,11 +40,19 @@ const PostsIndex: NextPage<Props> = (props) => {
 export default PostsIndex;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+    const index = context.req.url?.indexOf("?");
+    const search = context.req.url?.substr(index! + 1);
+    const query = qs.parse(search!.toString());
+    const page = parseInt(query.page!.toString()) || 1;
     const connection = await getDatabaseConnection();
-    const posts = await connection.manager.find(Post);
+    const perPage = 3;
+    const [posts, count] = await connection.manager.findAndCount(Post, {skip: (page - 1) * perPage, take: perPage});
     return {
         props: {
-            posts: JSON.parse(JSON.stringify(posts))
+            posts: JSON.parse(JSON.stringify(posts)),
+            count,
+            perPage,
+            page
         }
     };
 };
