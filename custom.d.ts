@@ -5,3 +5,8 @@ type Post = {
     content: string,
     htmlContent: string
 }
+type UsersErrors = {
+    username: string[];
+    password: string[];
+    passwordConfirmation: string[];
+}
