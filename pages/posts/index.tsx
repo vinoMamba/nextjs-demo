@@ -42,9 +42,9 @@ export default PostsIndex;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const index = context.req.url?.indexOf("?");
-    const search = context.req.url?.substr(index! + 1);
+    const search = context.req.url?.substr(index === undefined ? -1 : index + 1);
     const query = qs.parse(search!.toString());
-    const page = parseInt(query.page!.toString()) || 1;
+    const page = (query.page && parseInt(query.page.toString())) || 1;
     const connection = await getDatabaseConnection();
     const perPage = 1;
     const [posts, count] = await connection.manager.findAndCount(Post, {skip: (page - 1) * perPage, take: perPage});
